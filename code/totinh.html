@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tỏ Tình Vũ Trụ</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: url('https://images.unsplash.com/photo-1465101162946-4377e57745c3') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Arial', sans-serif;
+      position: relative;
+    }
+    .container {
+      text-align: center;
+      z-index: 10;
+    }
+    .message {
+      color: #ff6b6b;
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 0 0 15px rgba(255, 107, 107, 0.8);
+      margin-bottom: 30px;
+      animation: pulse 2s infinite;
+    }
+    .plead-container {
+      display: none;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+    .plead-text {
+      color: #fff;
+      font-size: 2rem;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      margin-bottom: 10px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .plead-image {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .btn-yes, .btn-no {
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      transition: transform 0.3s ease, font-size 0.3s ease;
+    }
+    .btn-yes {
+      background-color: #ff6b6b;
+      border-color: #ff6b6b;
+      color: #fff;
+    }
+    .btn-yes:hover {
+      background-color: #ff8787;
+      border-color: #ff8787;
+    }
+    .btn-no {
+      background-color: #5a6268;
+      border-color: #5a6268;
+      color: #fff;
+    }
+    .btn-no:hover {
+      background-color: #5a6268;
+      border-color: #5a6268;
+    }
+    .success-screen {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 2rem;
+      text-align: center;
+      z-index: 20;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .particle {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      z-index: 1;
+      animation: fall linear infinite;
+    }
+    .audio-controls {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 30;
+    }
+    .audio-btn {
+      font-size: 1rem;
+      padding: 5px 10px;
+      background-color: #ff6b6b;
+      border-color: #ff6b6b;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .audio-btn:hover {
+      background-color: #ff8787;
+      border-color: #ff8787;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes fall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 768px) {
+      .message {
+        font-size: 2.5rem;
+      }
+      .plead-text {
+        font-size: 1.6rem;
+      }
+      .plead-image {
+        width: 60px;
+        height: 60px;
+      }
+      .btn-yes, .btn-no {
+        font-size: 1.2rem;
+        padding: 8px 16px;
+      }
+      .plead-container {
+        margin-bottom: 40px;
+      }
+    }
+    @media (max-width: 576px) {
+      .message {
+        font-size: 2rem;
+      }
+      .plead-text {
+        font-size: 1.3rem;
+      }
+      .plead-image {
+        width: 50px;
+        height: 50px;
+      }
+      .btn-yes, .btn-no {
+        font-size: 1rem;
+        padding: 6px 12px;
+      }
+      .plead-container {
+        margin-bottom: 30px;
+      }
+      .success-screen {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="message">Làm ny anh nhé!</div>
+    <div class="plead-container" id="plead">
+      <div class="plead-text" id="plead-text"></div>
+      <img class="plead-image" id="plead-image" src="" alt="Plead Image">
+    </div>
+    <div class="buttons">
+      <button class="btn btn-yes" id="yes">Yes</button>
+      <button class="btn btn-no" id="no">No</button>
+    </div>
+  </div>
+  <div class="success-screen" id="success">
+    <div>Anh biết mà! 💖 Em là định mệnh của anh! 😘</div>
+  </div>
+  <audio id="background-music" loop autoplay>
+    <source src="music.mp3" type="audio/mp3">
+    Your browser does not support the audio element.
+  </audio>
+  <div class="audio-controls">
+    <button class="audio-btn" id="toggle-audio">Pause Music</button>
+  </div>
+
+  <!-- Bootstrap JS and Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+  <!-- Custom JavaScript -->
+  <script>
+    // Particle effect for falling hearts and flowers
+    function createParticle() {
+      const particle = document.createElement('div');
+      particle.classList.add('particle');
+      const isHeart = Math.random() > 0.5;
+      particle.style.backgroundImage = isHeart
+        ? "url('https://img.icons8.com/emoji/40/000000/heart-suit.png')"
+        : "url('https://img.icons8.com/emoji/40/000000/rose-emoji.png')";
+      particle.style.left = Math.random() * 100 + 'vw';
+      particle.style.animationDuration = Math.random() * 4 + 3 + 's';
+      particle.style.opacity = Math.random() * 0.5 + 0.5;
+      document.body.appendChild(particle);
+      setTimeout(() => particle.remove(), 7000);
+    }
+
+    setInterval(createParticle, 200);
+
+    // Button interaction
+    const yesBtn = document.getElementById('yes');
+    const noBtn = document.getElementById('no');
+    const pleadContainer = document.getElementById('plead');
+    const pleadText = document.getElementById('plead-text');
+    const pleadImage = document.getElementById('plead-image');
+    const successScreen = document.getElementById('success');
+    const audio = document.getElementById('background-music');
+    const toggleAudioBtn = document.getElementById('toggle-audio');
+    let yesScale = 1;
+    let noClicks = 0;
+
+    const pleas = [
+      { text: 'Anh hứa sẽ yêu thương em hết lòng! 🥺', image: 'https://img.icons8.com/emoji/80/000000/heart-suit.png' },
+      { text: 'Đừng từ chối anh mà, em ơi! 😢', image: 'https://img.icons8.com/emoji/80/000000/rose-emoji.png' },
+      { text: 'Trái tim anh chỉ có mình em thôi! 💖', image: 'https://img.icons8.com/emoji/80/000000/sparkling-heart.png' },
+      { text: 'Làm ny anh đi, anh sẽ cho em cả thế giới! 🌍', image: 'https://img.icons8.com/emoji/80/000000/globe-showing-americas.png' },
+      { text: 'Em là ánh sáng của đời anh, đồng ý nhé? ✨', image: 'https://img.icons8.com/emoji/80/000000/glowing-star.png' }
+    ];
+
+    // Audio control
+    audio.play().catch(e => console.log("Audio play failed:", e));
+    toggleAudioBtn.addEventListener('click', () => {
+      if (audio.paused) {
+        audio.play();
+        toggleAudioBtn.textContent = 'Pause Music';
+      } else {
+        audio.pause();
+        toggleAudioBtn.textContent = 'Play Music';
+      }
+    });
+
+    noBtn.addEventListener('click', () => {
+      noClicks++;
+      yesScale += 0.3;
+      yesBtn.style.transform = `scale(${yesScale})`;
+      pleadContainer.style.display = 'block';
+      const randomPlea = pleas[Math.floor(Math.random() * pleas.length)];
+      pleadText.textContent = randomPlea.text;
+      pleadImage.src = randomPlea.image;
+    });
+
+    yesBtn.addEventListener('click', () => {
+      document.querySelector('.container').style.display = 'none';
+      successScreen.style.display = 'flex';
+    });
+  </script>
+</body>
+</html>
