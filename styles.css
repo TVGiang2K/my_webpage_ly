@@ -1,0 +1,205 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  background-color: #ffb6c1;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+}
+
+.container {
+  text-align: center;
+  z-index: 10;
+}
+
+.love-image {
+  width: 200px; 
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 30px; 
+}
+
+.message {
+  color: #ff6b6b;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 0 0 15px rgba(255, 107, 107, 0.8);
+  margin-bottom: 30px;
+  animation: pulse 2s infinite;
+}
+
+.plead-container {
+  display: none;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.plead-text {
+  color: #fff;
+  font-size: 2rem;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  margin-bottom: 10px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-yes, .btn-no {
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+.btn-yes {
+  background-color: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #fff;
+}
+
+.btn-yes:hover {
+  background-color: #ff8787;
+  border-color: #ff8787;
+}
+
+.btn-no {
+  background-color: #5a6268;
+  border-color: #5a6268;
+  color: #fff;
+}
+
+.btn-no:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.success-screen {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 2rem;
+  text-align: center;
+  z-index: 20;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.particle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 1;
+  animation: fall linear infinite;
+}
+
+.audio-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 30;
+}
+
+.audio-btn {
+  font-size: 1rem;
+  padding: 5px 10px;
+  background-color: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.audio-btn:hover {
+  background-color: #ff8787;
+  border-color: #ff8787;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-10vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .message {
+    font-size: 2.5rem;
+  }
+
+  .love-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .plead-text {
+    font-size: 1.6rem;
+  }
+
+  .btn-yes, .btn-no {
+    font-size: 1.2rem;
+    padding: 8px 16px;
+  }
+
+  .plead-container {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .message {
+    font-size: 2rem;
+  }
+
+  .love-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .plead-text {
+    font-size: 1.3rem;
+  }
+
+  .btn-yes, .btn-no {
+    font-size: 1rem;
+    padding: 6px 12px;
+  }
+
+  .plead-container {
+    margin-bottom: 30px;
+  }
+
+  .success-screen {
+    font-size: 1.5rem;
+  }
+}
